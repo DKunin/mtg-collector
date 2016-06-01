@@ -36,8 +36,8 @@ var Search = Vue.extend({
     }
 });
 
-var Bar = Vue.extend({
-    template: '<p>This is list!</p>'
+var Dev = Vue.extend({
+    template: '<p>In dev</p>'
 });
 
 var App = Vue.extend({});
@@ -48,7 +48,13 @@ router.map({
         component: Search
     },
     '/list': {
-        component: Bar
+        component: Dev
+    },
+    '/decks': {
+        component: Dev
+    },
+    '/import': {
+        component: Dev
     }
 });
 
