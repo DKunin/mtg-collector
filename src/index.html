@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>MTG Collector</title>
+  </head>
+    <style>
+      .mtg-card {
+        max-width: 300px;
+      }
+    </style>
+  <body>
+
+  <script type="text/x-template" id="list-template">
+      
+    </script>
+
+    <script type="text/x-template" id="demo-template">
+      <form @submit="fetchData">
+        <input v-model="mtgquery"/>
+        <button type="button" @click="fetchData">Search</button>
+        <vlist :data="mtgcards"></vlist>
+      </form>
+    </script>
+
+    <!-- demo root element -->
+    <div id="app">
+      <p>
+        <a v-link="{ path: '/search' }">Search</a>
+        <a v-link="{ path: '/list' }">List</a>
+      </p>
+      <router-view></router-view>
+    </div>
+  
+    <script src="./dist/app.js"></script>
+
+  </body>
+</html>
