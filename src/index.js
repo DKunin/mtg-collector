@@ -10,6 +10,15 @@ const router = new VueRouter();
 router.map({
     '/': {
         component: require('./views/search')
+    },
+    '/collection': {
+        component: require('./views/collection')
+    },
+    '/decks': {
+        component: require('./views/decks')
+    },
+    '/import': {
+        component: require('./views/import')
     }
 });
 router.start(App, '#app');

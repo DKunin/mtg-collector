@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import todos from './todos';
-import counter from './counter';
 import search from './search';
+import cards from './cards';
 
 export default combineReducers({
     search,
-    todos,
-    counter
+    cards
 });

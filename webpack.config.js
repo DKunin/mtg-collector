@@ -1,68 +1,30 @@
 var webpack = require('webpack');
-var path = require('path');
-var buildPath = path.resolve(__dirname, 'dist');
-var sourcePath = path.resolve(__dirname, 'src');
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const production = process.argv.find((element) => element === '--production') ? true : false;
-
-const jsBaseEntry = [
-  'babel-polyfill',
-  sourcePath + '/js/app.js'
-];
-
-var config = {
-    entry: {
-        js: jsBaseEntry,
-        html: sourcePath + '/index.html'
-    },
+module.exports = {
+    entry: ['./src/index'],
+    devtool: 'cheap-module-eval-source-map',
     output: {
-        path: buildPath,
-        filename: 'dist/app.js'
-    },
-    plugins: [],
-    module: {
-        preLoaders: [
-      {
-          test: /\.(js|jsx)$/,
-          loader: 'eslint-loader',
-          include: [path.resolve(__dirname, 'src/app')],
-          exclude: [nodeModulesPath]
-      }
-    ],
-        loaders: [
-      {
-          test: /\.(js|jsx)$/,
-          exclude: [nodeModulesPath],
-          loaders: [
-            'babel?' + JSON.stringify({
-                presets: ['react', 'es2015']
-            })
-        ]
-      },
-      {
-          test: /\.(html)$/,
-          loader: 'file?name=[name].[ext]'
-      }
-    ]
+        path: __dirname + '/dist',
+        filename: 'bundle.[hash].js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx'],
-        root: __dirname
+        extensions: ['', '.js', '.vue']
     },
-    devtool: 'source-map'
-};
-
-if (production) {
-    process.env.NODE_ENV = 'production';
-
-    config.plugins = [
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        }
+    module: {
+        loaders: [
+          { test: /\.js$/, loaders: ['babel-loader'], exclude: [/node_modules/] },
+          { test: /\.vue$/, loaders: ['vue'], exclude: [/node_modules/] }
+        ]
+    },
+    plugins: [
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('development'),
+        __DEV__: true
+    }),
+    new HtmlWebpackPlugin({
+        title: 'MTG Collector',
+        template: './src/index.tpl'
     })
-  ].concat(config.plugins);
-}
-
-module.exports = config;
+  ]
+};

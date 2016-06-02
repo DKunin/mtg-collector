@@ -3,15 +3,15 @@ import Revue from 'revue';
 import { createStore, applyMiddleware } from 'redux';
 import reducer from './reducers/index';
 import thunk from 'redux-thunk';
-import * as todoActions from './actions/todos';
+import * as cardsActions from './actions/cards';
 import * as searchActions from './actions/search';
-const mergedActions = { ...todoActions, ...searchActions };
+const mergedActions = { ...cardsActions, ...searchActions };
 const createStoreWithMiddleware = applyMiddleware(
   thunk
 )(createStore);
 
 const reduxStore = createStoreWithMiddleware(reducer);
-console.log(mergedActions);
+
 const store = new Revue(Vue, reduxStore, mergedActions);
 
 if (typeof __DEV__ !== 'undefined' && __DEV__) {
