@@ -13,14 +13,13 @@ var savedJSON = JSON.parse(fs.readFileSync(FILENAME).toString());
 var COLLECTION = I.Map(savedJSON);
 
 function getSingleCardByName(name) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
         request
           .get(`https://api.deckbrew.com/mtg/cards?name=${name}`)
           .end((error, data) => {
               if (error) {
                   resolve(false);
               }
-              console.log(data.body[0]);
               resolve(data.body[0]);
           });
     });
