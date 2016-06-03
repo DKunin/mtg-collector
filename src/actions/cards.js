@@ -17,7 +17,7 @@ export function cardsLoaded(cards) {
 export function cardsLoad(text) {
     return dispatch => {
         dispatch(cardsLoading());
-        fetch('/search/' + text)
+        fetch('/api/search/' + text)
             .then(response => response.json()).then(data => {
                 dispatch(cardsLoaded(data));
             });

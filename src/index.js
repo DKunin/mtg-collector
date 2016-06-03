@@ -19,6 +19,9 @@ router.map({
     },
     '/import': {
         component: require('./views/import')
+    },
+    '/export': {
+        component: require('./views/export')
     }
 });
 router.start(App, '#app');

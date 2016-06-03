@@ -5,7 +5,8 @@ import reducer from './reducers/index';
 import thunk from 'redux-thunk';
 import * as cardsActions from './actions/cards';
 import * as searchActions from './actions/search';
-const mergedActions = { ...cardsActions, ...searchActions };
+import * as collectionActions from './actions/collection';
+const mergedActions = { ...cardsActions, ...searchActions, ...collectionActions };
 const createStoreWithMiddleware = applyMiddleware(
   thunk
 )(createStore);
