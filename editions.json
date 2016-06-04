@@ -1,0 +1,426 @@
+[
+    {
+        "code": "SOI",
+        "name": "Shadows over Innistrad"
+    },
+    {
+        "code": "DDQ",
+        "name": "Duel Decks: Blessed vs. Cursed"
+    },
+    {
+        "code": "OGW",
+        "name": "Oath of the Gatewatch"
+    },
+    {
+        "code": "C15",
+        "name": "Commander 2015"
+    },
+    {
+        "code": "BFZ",
+        "name": "Battle for Zendikar"
+    },
+    {
+        "code": "ORI",
+        "name": "Magic: Origins"
+    },
+    {
+        "code": "MM2",
+        "name": "Modern Masters 2015 Edition"
+    },
+    {
+        "code": "DTK",
+        "name": "Dragons of Tarkir"
+    },
+    {
+        "code": "DDO",
+        "name": "Duel Decks: Elspeth vs. Kiora"
+    },
+    {
+        "code": "FRF",
+        "name": "Fate Reforged"
+    },
+    {
+        "code": "C14",
+        "name": "Commander 2014"
+    },
+    {
+        "code": "KTK",
+        "name": "Khans of Tarkir"
+    },
+    {
+        "code": "DDN",
+        "name": "Duel Decks: Speed vs. Cunning"
+    },
+    {
+        "code": "M15",
+        "name": "Magic 2015"
+    },
+    {
+        "code": "CNS",
+        "name": "Conspiracy"
+    },
+    {
+        "code": "JOU",
+        "name": "Journey into Nyx"
+    },
+    {
+        "code": "BNG",
+        "name": "Born of the Gods"
+    },
+    {
+        "code": "C13",
+        "name": "Commander 2013"
+    },
+    {
+        "code": "THS",
+        "name": "Theros"
+    },
+    {
+        "code": "DDL",
+        "name": "Duel Decks: Heroes vs. Monsters"
+    },
+    {
+        "code": "M14",
+        "name": "Magic 2014"
+    },
+    {
+        "code": "MMA",
+        "name": "Modern Masters"
+    },
+    {
+        "code": "DGM",
+        "name": "Dragon's Maze"
+    },
+    {
+        "code": "GTC",
+        "name": "Gatecrash"
+    },
+    {
+        "code": "RTR",
+        "name": "Return to Ravnica"
+    },
+    {
+        "code": "M13",
+        "name": "Magic 2013"
+    },
+    {
+        "code": "PC2",
+        "name": "Planechase (2012 Edition)"
+    },
+    {
+        "code": "AVR",
+        "name": "Avacyn Restored"
+    },
+    {
+        "code": "DKA",
+        "name": "Dark Ascension"
+    },
+    {
+        "code": "ISD",
+        "name": "Innistrad"
+    },
+    {
+        "code": "M12",
+        "name": "Magic 2012"
+    },
+    {
+        "code": "CMD",
+        "name": "Commander"
+    },
+    {
+        "code": "NPH",
+        "name": "New Phyrexia"
+    },
+    {
+        "code": "MBS",
+        "name": "Mirrodin Besieged"
+    },
+    {
+        "code": "SOM",
+        "name": "Scars of Mirrodin"
+    },
+    {
+        "code": "M11",
+        "name": "Magic 2011"
+    },
+    {
+        "code": "ROE",
+        "name": "Rise of the Eldrazi"
+    },
+    {
+        "code": "WWK",
+        "name": "Worldwake"
+    },
+    {
+        "code": "ZEN",
+        "name": "Zendikar"
+    },
+    {
+        "code": "PCH",
+        "name": "Planechase"
+    },
+    {
+        "code": "M10",
+        "name": "Magic 2010"
+    },
+    {
+        "code": "AR",
+        "name": "Alara Reborn"
+    },
+    {
+        "code": "CF",
+        "name": "Conflux"
+    },
+    {
+        "code": "SA",
+        "name": "Shards of Alara"
+    },
+    {
+        "code": "ET",
+        "name": "Eventide"
+    },
+    {
+        "code": "SM",
+        "name": "Shadowmoor"
+    },
+    {
+        "code": "MT",
+        "name": "Morningtide"
+    },
+    {
+        "code": "LW",
+        "name": "Lorwyn"
+    },
+    {
+        "code": "10E",
+        "name": "Tenth Edition"
+    },
+    {
+        "code": "FS",
+        "name": "Future Sight"
+    },
+    {
+        "code": "PC",
+        "name": "Planar Chaos"
+    },
+    {
+        "code": "TST",
+        "name": "\"Time Spiral \"\"Timeshifted\"\"\""
+    },
+    {
+        "code": "TS",
+        "name": "Time Spiral"
+    },
+    {
+        "code": "CS",
+        "name": "Coldsnap"
+    },
+    {
+        "code": "DI",
+        "name": "Dissension"
+    },
+    {
+        "code": "GP",
+        "name": "Guildpact"
+    },
+    {
+        "code": "RA",
+        "name": "Ravnica: City of Guilds"
+    },
+    {
+        "code": "9E",
+        "name": "Ninth Edition"
+    },
+    {
+        "code": "SK",
+        "name": "Saviors of Kamigawa"
+    },
+    {
+        "code": "BK",
+        "name": "Betrayers of Kamigawa"
+    },
+    {
+        "code": "UH",
+        "name": "Unhinged"
+    },
+    {
+        "code": "CK",
+        "name": "Champions of Kamigawa"
+    },
+    {
+        "code": "FD",
+        "name": "Fifth Dawn"
+    },
+    {
+        "code": "DS",
+        "name": "Darksteel"
+    },
+    {
+        "code": "MR",
+        "name": "Mirrodin"
+    },
+    {
+        "code": "8E",
+        "name": "Eighth Edition"
+    },
+    {
+        "code": "SC",
+        "name": "Scourge"
+    },
+    {
+        "code": "LE",
+        "name": "Legions"
+    },
+    {
+        "code": "ON",
+        "name": "Onslaught"
+    },
+    {
+        "code": "JU",
+        "name": "Judgment"
+    },
+    {
+        "code": "TO",
+        "name": "Torment"
+    },
+    {
+        "code": "OD",
+        "name": "Odyssey"
+    },
+    {
+        "code": "AP",
+        "name": "Apocalypse"
+    },
+    {
+        "code": "7E",
+        "name": "Seventh Edition"
+    },
+    {
+        "code": "PS",
+        "name": "Planeshift"
+    },
+    {
+        "code": "IN",
+        "name": "Invasion"
+    },
+    {
+        "code": "PY",
+        "name": "Prophecy"
+    },
+    {
+        "code": "NE",
+        "name": "Nemesis"
+    },
+    {
+        "code": "MM",
+        "name": "Mercadian Masques"
+    },
+    {
+        "code": "ST",
+        "name": "Starter"
+    },
+    {
+        "code": "P3",
+        "name": "Portal: Three Kingdoms"
+    },
+    {
+        "code": "UD",
+        "name": "Urza's Destiny"
+    },
+    {
+        "code": "6E",
+        "name": "Classic Sixth Edition"
+    },
+    {
+        "code": "UL",
+        "name": "Urza's Legacy"
+    },
+    {
+        "code": "US",
+        "name": "Urza's Saga"
+    },
+    {
+        "code": "UG",
+        "name": "Unglued"
+    },
+    {
+        "code": "EX",
+        "name": "Exodus"
+    },
+    {
+        "code": "P2",
+        "name": "Portal: Second Age"
+    },
+    {
+        "code": "SH",
+        "name": "Stronghold"
+    },
+    {
+        "code": "TE",
+        "name": "Tempest"
+    },
+    {
+        "code": "WL",
+        "name": "Weatherlight"
+    },
+    {
+        "code": "P1",
+        "name": "Portal"
+    },
+    {
+        "code": "5E",
+        "name": "Fifth Edition"
+    },
+    {
+        "code": "VI",
+        "name": "Visions"
+    },
+    {
+        "code": "MI",
+        "name": "Mirage"
+    },
+    {
+        "code": "AL",
+        "name": "Alliances"
+    },
+    {
+        "code": "HL",
+        "name": "Homelands"
+    },
+    {
+        "code": "IA",
+        "name": "Ice Age"
+    },
+    {
+        "code": "4E",
+        "name": "fourth Edition"
+    },
+    {
+        "code": "FE",
+        "name": "Fallen Empires"
+    },
+    {
+        "code": "DK",
+        "name": "The Dark"
+    },
+    {
+        "code": "LG",
+        "name": "Legends"
+    },
+    {
+        "code": "3E",
+        "name": "Revised"
+    },
+    {
+        "code": "AQ",
+        "name": "Antiquities"
+    },
+    {
+        "code": "AN",
+        "name": "Arabian Nights"
+    },
+    {
+        "code": "2E",
+        "name": "Alpha/Beta/Unlimited"
+    }
+]

@@ -8,8 +8,11 @@ var I = require('immutable');
 var app = express();
 var fs = require('fs');
 var PORT = 7801;
+var helpers = require('./modules/helpers');
+var head = helpers.head;
 const FILENAME = './collection.json';
 var savedJSON = JSON.parse(fs.readFileSync(FILENAME).toString());
+var editionsCodesForMtgRu = JSON.parse(fs.readFileSync('./editions.json').toString());
 var COLLECTION = I.Map(savedJSON);
 
 function getSingleCardByName(name) {
@@ -45,6 +48,20 @@ app.get('/api/search/:query', function(req, res) {
 
 app.get('/api/collection', function(req, res) {
     res.json(COLLECTION.toJSON());
+});
+app.get('/api/collectionexport', function(req, res) {
+    var jsonColleciton = COLLECTION.toJSON();
+    var response = Object.keys(jsonColleciton).map(singleObjectKey => {
+        var singleObject = jsonColleciton[singleObjectKey];
+        var edition = head(singleObject.editions);
+        var editioncode = editionsCodesForMtgRu.find(singleEdition => {
+                return edition.set.indexOf(singleEdition.name) !== -1;
+            });
+        return Object.assign({}, singleObject, {
+            editioncode: editioncode ? editioncode.code : '---'
+        });
+    });
+    res.json(response);
 });
 
 app.post('/api/addCard', function(req, res) {
