@@ -4,13 +4,22 @@
     float: left;
     min-height: 1px;
   }
+  .hidden {
+    display: none;
+  }
+  .filter-line {
+    clear: both;
+  }
 </style>
 
 <template>
   <h3>Owned cards</h3>
-  <div>
+  <div class="hidden">
     <label for="black"><input v-on:change="addFilterReducer('black')" type="checkbox" id="black"/> Black</label>
     <label for="red"><input v-on:change="addFilterReducer('red')" type="checkbox" id="red"/> red</label>
+  </div>
+  <div class="filter-line">
+     <input v-model="search" type="text"/>
   </div>
   <div class="right-half">
     <card-view :card="selectedCard" :collection-view="true"></card-view>
@@ -38,18 +47,26 @@
         },
         computed: {
             collectionFiltered: function(){
-                var reducers = this.reducers;
-                var collection = this.collection;
-                var newCollection = Object.keys(reducers).reduce((newArray, curReducer) => {
-                    var newFilteredStuff = reducers[curReducer](collection);
-                    return newArray.concat(newFilteredStuff);
-                }, [])
-                return newCollection;
+                if (!this.search || this.search === '') {
+                    return this.collection;
+                }
+                var searchQuery = this.search.toLowerCase();
+                return this.collection.filter(({ name }) => name.toLowerCase().indexOf(searchQuery)!==-1);
+            }, 
+            selectedCard: function() {
+                if (!this.selectedCardIndex) {
+                    return {}
+                }
+                return this.collection[this.selectedCardIndex];
             }
         },
         events: {
-            'select-card': function (selectedCard) {
-                this.selectedCard = selectedCard;
+            'select-card': function (selectedCardIndex) {
+                this.selectedCardIndex = selectedCardIndex;
+            },
+            'update-card': function (id, form) {
+                console.log(id, form)
+                store.dispatch(store.actions.collectionUpdateCard(id, form));
             }
         },
         methods: {
@@ -73,8 +90,9 @@
         },
         data () {
             return {
+                search: '',
                 reducers: {},
-                selectedCard: {},
+                selectedCardIndex: false,
                 collection: this.$select('collection')
             }
         }

@@ -2,7 +2,7 @@ export const COLLECTION_EMPTY = 'COLLECTION_EMPTY';
 export const COLLECTION_UPDATE = 'COLLECTION_UPDATE';
 export const COLLECTION_ADD_CARD = 'COLLECTION_ADD_CARD';
 export const COLLECTION_REMOVE_CARD = 'COLLECTION_REMOVE_CARD';
-
+import serialize from 'form-serialize';
 export function collectionLoading() {
     return {
         type: COLLECTION_EMPTY
@@ -56,6 +56,26 @@ export function collectionRemoveCard(id) {
         })
         .then(response => response.json()).then(data => {
             dispatch(collectionLoaded(data));
+        });
+    };
+}
+
+export function collectionUpdateCard(id, form) {
+    return dispatch => {
+        // dispatch(collectionLoading());
+        fetch('/api/updateCard?id=' + id, {
+            method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+                // Accept: 'application/x-www-form-urlencoded',
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: JSON.stringify(serialize(form, {hash: true}))
+        })
+        .then(response => response.json()).then(data => {
+            console.log(data);
+            //dispatch(collectionLoaded(data));
         });
     };
 }

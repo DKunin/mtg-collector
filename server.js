@@ -36,6 +36,7 @@ app.use(stylus.middleware({
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(express.static('./dist'));
 
 app.get('/api/search/:query', function(req, res) {
@@ -55,8 +56,8 @@ app.get('/api/collectionexport', function(req, res) {
         var singleObject = jsonColleciton[singleObjectKey];
         var edition = head(singleObject.editions);
         var editioncode = editionsCodesForMtgRu.find(singleEdition => {
-                return edition.set.indexOf(singleEdition.name) !== -1;
-            });
+            return edition.set.indexOf(singleEdition.name) !== -1;
+        });
         return Object.assign({}, singleObject, {
             editioncode: editioncode ? editioncode.code : '---'
         });
@@ -73,11 +74,28 @@ app.post('/api/addCard', function(req, res) {
           res.json(COLLECTION.toJSON());
       });
 });
+app.post('/api/addCard', function(req, res) {
+    request
+      .get(`https://api.deckbrew.com/mtg/cards/${req.query.id}`)
+      .end((error, data) => {
+          COLLECTION = COLLECTION.set(req.query.id, data.body);
+          fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
+          res.json(COLLECTION.toJSON());
+      });
+});
 
 app.post('/api/removeCard', function(req, res) {
     COLLECTION = COLLECTION.delete(req.query.id);
     fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
     res.json(COLLECTION.toJSON());
+});
+
+app.post('/api/updateCard', function(req, res) {
+    // COLLECTION = COLLECTION.update(req.query.id, function(singleElem) {
+    //     singleElem.quantity = req.body.quantity;
+    // });
+    // fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
+    // res.json(COLLECTION.toJSON());
 });
 
 app.post('/api/importCards', function(req, res) {
