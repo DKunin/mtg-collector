@@ -100,11 +100,21 @@ app.post('/api/removeCard', function(req, res) {
 });
 
 app.post('/api/updateCard', function(req, res) {
-    const keys = ['comment', 'foil', 'notforsale', 'posessedEdition', 'quantity', 'price'];
+    const constructedObject = req.body['edition-key'].map(singleKey => {
+        return {
+            id: singleKey,
+            edition: req.body[`edition-${singleKey}`],
+            comment: req.body[`comment-${singleKey}`],
+            price: req.body[`price-${singleKey}`],
+            foiled: req.body[`foiled-${singleKey}`]
+        };
+    });
+    // const keys = ['comment', 'foil', 'notforsale', 'posessedEdition', 'quantity', 'price'];
     COLLECTION = COLLECTION.update(req.query.id, item => {
-        keys.forEach(singleKey => {
-            item[singleKey] = req.body[singleKey] || null;
-        });
+        // keys.forEach(singleKey => {
+        //     item[singleKey] = req.body[singleKey] || null;
+        // });
+        item.owned = constructedObject;
         return item;
     });
     fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});

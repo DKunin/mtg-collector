@@ -1,6 +1,6 @@
 {
   "name": "mtg-collector",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Simple demo-app for ansambling of mtg collections",
   "main": "vue-router.min.js",
   "scripts": {

@@ -24,9 +24,12 @@
   <div class="right-half">
     <card-view :card="selectedCard" :collection-view="true"></card-view>
     <card-edit :card="selectedCard"></card-edit>
-    <div>Possible price: {{possiblePrice}}</div>
-    <div v-if="possiblePrice"><i>Price source: http://magictcgprices.appspot.com</i></div>
-    <button v-on:click="loadPossiblePrice">Load possible Price</button>
+    <div v-if="selectedCard.name">
+        <div>Possible price: {{possiblePrice}}</div>
+        <div v-if="possiblePrice"><i>Price source: http://magictcgprices.appspot.com</i></div>
+        <button v-on:click="loadPossiblePrice">Load possible Price</button>
+    </div>
+
   </div>
   <div class="left-half">
     <card-list-names :data="collectionFiltered"></card-list-names>
@@ -57,6 +60,7 @@
                     return this.collection;
                 }
                 var searchQuery = this.search.toLowerCase();
+                this.selectedCardIndex = 0;
                 return this.collection.filter(({ name }) => name.toLowerCase().indexOf(searchQuery)!==-1);
             }, 
             selectedCard: function() {

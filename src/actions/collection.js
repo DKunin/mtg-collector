@@ -61,7 +61,6 @@ export function collectionRemoveCard(id) {
 }
 
 export function collectionUpdateCard(id, form) {
-    console.log(serialize(form, { hash: true }));
     return dispatch => {
         fetch('/api/updateCard?id=' + id, {
             method: 'post',
