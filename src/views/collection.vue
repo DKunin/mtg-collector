@@ -54,7 +54,7 @@
                 return this.collection.filter(({ name }) => name.toLowerCase().indexOf(searchQuery)!==-1);
             }, 
             selectedCard: function() {
-                if (!this.selectedCardIndex) {
+                if (!this.selectedCardIndex && this.selectedCardIndex !== 0) {
                     return {}
                 }
                 return this.collection[this.selectedCardIndex];
@@ -65,7 +65,6 @@
                 this.selectedCardIndex = selectedCardIndex;
             },
             'update-card': function (id, form) {
-                console.log(id, form)
                 store.dispatch(store.actions.collectionUpdateCard(id, form));
             }
         },

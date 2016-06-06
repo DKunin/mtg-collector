@@ -21,7 +21,7 @@
         <div><i>{{card.editions[selectedEditionIndex].flavor}}</i></div>
         <div><img v-bind:src="card.editions[selectedEditionIndex].image_url" /></div>
         <span v-for="edition in card.editions" 
-            <span class="edition-tag" v-bind:class="{ 'edition-tag-current': selectedEditionIndex===$index }" v-on:click="setSelectedIndex($index)" title="{{edition.set}}">{{edition.set_id}}</span>
+            <span class="edition-tag" v-bind:class="{ 'edition-tag-current': selectedEditionIndex===$index }" v-on:click="setSelectedIndex($index)" title="{{edition.set}}">{{edition.set_id}} - {{edition.multiverse_id}}</span>
         </span>
         <div v-if="card.power">{{card.power}}/{{card.toughness}}</div>
         <div v-if="collectionView">
@@ -98,7 +98,8 @@
         watch: {
             'card': function() {
                 this.selectedEditionIndex = 0;
-                this.$el.parentNode.querySelector('form').reset();
+                const form = this.$el.parentNode.querySelector('form');
+                form ? form.reset() : null;
             }
         },
         computed: {
