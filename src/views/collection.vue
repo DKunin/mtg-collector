@@ -23,6 +23,7 @@
   </div>
   <div class="right-half">
     <card-view :card="selectedCard" :collection-view="true"></card-view>
+    <card-edit :card="selectedCard"></card-edit>
     <div>Possible price: {{possiblePrice}}</div>
     <div v-if="possiblePrice"><i>Price source: http://magictcgprices.appspot.com</i></div>
     <button v-on:click="loadPossiblePrice">Load possible Price</button>
@@ -36,6 +37,7 @@
     import store from '../store';
     import cardListNames from '../components/card-list-names';
     import cardView from '../components/card-view';
+    import cardEdit from '../components/card-edit';
     import { filterByColor, cloneArray } from '../../modules/helpers';
     
     var reducersCodes = {
@@ -46,7 +48,8 @@
     export default {
         components: {
             cardListNames,
-            cardView
+            cardView,
+            cardEdit
         },
         computed: {
             collectionFiltered: function(){
