@@ -62,20 +62,16 @@ export function collectionRemoveCard(id) {
 
 export function collectionUpdateCard(id, form) {
     return dispatch => {
-        // dispatch(collectionLoading());
         fetch('/api/updateCard?id=' + id, {
             method: 'post',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
-                // Accept: 'application/x-www-form-urlencoded',
-                // 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: JSON.stringify(serialize(form, {hash: true}))
+            body: JSON.stringify(serialize(form, { hash: true }))
         })
         .then(response => response.json()).then(data => {
-            console.log(data);
-            //dispatch(collectionLoaded(data));
+            dispatch(collectionLoaded(data));
         });
     };
 }

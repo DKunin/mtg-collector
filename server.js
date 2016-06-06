@@ -47,9 +47,18 @@ app.get('/api/search/:query', function(req, res) {
       });
 });
 
+app.get('/api/possible-price', function(req, res) {
+    request
+      .get(`http://magictcgprices.appspot.com/api/cfb/price.json?cardname=${req.query.query}`)
+      .end((error, data) => {
+          res.json(data.body);
+      });
+});
+
 app.get('/api/collection', function(req, res) {
     res.json(COLLECTION.toJSON());
 });
+
 app.get('/api/collectionexport', function(req, res) {
     var jsonColleciton = COLLECTION.toJSON();
     var response = Object.keys(jsonColleciton).map(singleObjectKey => {

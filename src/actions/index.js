@@ -2,5 +2,6 @@
 import * as search from './search';
 import * as cards from './cards';
 import * as collection from './collection';
+import * as possiblePrice from './possible-price';
 
 import store from '../store';

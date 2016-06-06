@@ -23,6 +23,9 @@
   </div>
   <div class="right-half">
     <card-view :card="selectedCard" :collection-view="true"></card-view>
+    <div>Possible price: {{possiblePrice}}</div>
+    <div v-if="possiblePrice"><i>Price source: http://magictcgprices.appspot.com</i></div>
+    <button v-on:click="loadPossiblePrice">Load possible Price</button>
   </div>
   <div class="left-half">
     <card-list-names :data="collectionFiltered"></card-list-names>
@@ -57,7 +60,7 @@
                 if (!this.selectedCardIndex && this.selectedCardIndex !== 0) {
                     return {}
                 }
-                return this.collection[this.selectedCardIndex];
+                return this.collectionFiltered[this.selectedCardIndex];
             }
         },
         events: {
@@ -82,6 +85,14 @@
                     },{})
                 }
                 this.reducers = reducers;
+            },
+            loadPossiblePrice: function(){
+                store.dispatch(store.actions.priceLoad(this.collectionFiltered[this.selectedCardIndex].name))
+            }
+        },
+        watch: {
+            'selectedCard': function() {
+                store.dispatch(store.actions.priceLoading())
             }
         },
         created () {
@@ -92,7 +103,8 @@
                 search: '',
                 reducers: {},
                 selectedCardIndex: false,
-                collection: this.$select('collection')
+                collection: this.$select('collection'),
+                possiblePrice: this.$select('possiblePrice')
             }
         }
     }
