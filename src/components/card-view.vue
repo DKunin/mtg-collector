@@ -51,7 +51,7 @@
                                 Foil
                             </td>
                             <td>
-                                <input name="foil" type="checkbox" value="{{card.foil}}"/>
+                                <input name="foil" type="checkbox" checked="{{card.foil}}"/>
                             </td>
                         </tr>
                         <tr>
@@ -59,8 +59,7 @@
                                 Comment
                             </td>
                             <td>
-                                <textarea name="comment">
-                                </textarea>
+                                <textarea name="comment">{{card.comment}}</textarea>
                             </td>
                         </tr>
                         <tr>
@@ -68,7 +67,15 @@
                                 Not for sale
                             </td>
                             <td>
-                                <input name="notforsale" type="checkbox" value="{{card.notforsale}}"/>
+                                <input name="notforsale" type="checkbox" checked="{{card.notforsale}}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Price
+                            </td>
+                            <td>
+                                <input name="price" type="text" value="{{card.price}}"/>
                             </td>
                         </tr>
                     </tbody>
@@ -91,6 +98,7 @@
         watch: {
             'card': function() {
                 this.selectedEditionIndex = 0;
+                this.$el.parentNode.querySelector('form').reset();
             }
         },
         computed: {

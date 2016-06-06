@@ -16,5 +16,5 @@ Still a long way to go to see something remotely usefull. Huge alpha.
     - Quantinty of selected card
     - Is card foil or not
     - Edition of the card you possess
-    - Add comment
+    - ~~Add comment~~
     - Search for suggested price on several sources

@@ -6,6 +6,9 @@ Vue.use(VueRouter);
 if (__DEV__) {
     window.Vue = Vue;
 }
+
+Vue.config.debug = true;
+
 const router = new VueRouter();
 router.map({
     '/': {

@@ -91,11 +91,15 @@ app.post('/api/removeCard', function(req, res) {
 });
 
 app.post('/api/updateCard', function(req, res) {
-    // COLLECTION = COLLECTION.update(req.query.id, function(singleElem) {
-    //     singleElem.quantity = req.body.quantity;
-    // });
-    // fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
-    // res.json(COLLECTION.toJSON());
+    const keys = ['comment', 'foil', 'notforsale', 'posessedEdition', 'quantity', 'price'];
+    COLLECTION = COLLECTION.update(req.query.id, item => {
+        keys.forEach(singleKey => {
+            item[singleKey] = req.body[singleKey] || null;
+        });
+        return item;
+    });
+    fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
+    res.json(COLLECTION.toJSON());
 });
 
 app.post('/api/importCards', function(req, res) {
