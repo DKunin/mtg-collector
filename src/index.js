@@ -9,10 +9,14 @@ if (__DEV__) {
 
 Vue.config.debug = true;
 
-const router = new VueRouter();
+export const router = new VueRouter();
+
 router.map({
     '/': {
         component: require('./views/search')
+    },
+    '/login': {
+        component: require('./views/login')
     },
     '/collection': {
         component: require('./views/collection')
@@ -27,4 +31,9 @@ router.map({
         component: require('./views/export')
     }
 });
+
+router.redirect({
+    '*': '/'
+});
+
 router.start(App, '#app');
