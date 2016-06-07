@@ -24,7 +24,7 @@ var COLLECTION = I.Map(savedJSON);
 
 passport.use(new Strategy(
   function(username, password, cb) {
-      var user = { password: 'supercat' };
+      var user = { id: 0, username: 'felix', password: 'cat' };
       if (!user) {
           return cb(null, false);
       }
@@ -73,6 +73,10 @@ app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialize
 app.use(express.static('./dist'));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.post('/api/login', passport.authenticate('local'), function(req, res) {
+    res.json({ user: req.user });
+});
 
 app.get('/api/search/:query', ensureLogin.ensureLoggedIn('/#!/login'), function(req, res) {
     request

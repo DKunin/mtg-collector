@@ -7,7 +7,8 @@ import * as cardsActions from './actions/cards';
 import * as searchActions from './actions/search';
 import * as collectionActions from './actions/collection';
 import * as priceActions from './actions/possible-price';
-const mergedActions = { ...cardsActions, ...searchActions, ...collectionActions, ...priceActions };
+import * as authActions from './actions/auth';
+const mergedActions = { ...cardsActions, ...searchActions, ...collectionActions, ...priceActions, ...authActions };
 const createStoreWithMiddleware = applyMiddleware(
   thunk
 )(createStore);
