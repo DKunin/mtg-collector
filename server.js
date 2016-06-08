@@ -35,12 +35,12 @@ passport.use(new Strategy(
   }));
 
 passport.serializeUser(function(user, cb) {
-    cb(null, user.id);
+    cb(null, user);
 });
 
 passport.deserializeUser(function(id, cb) {
     var err = null;
-    var user = {};
+    var user = { id: 0, username: 'felix' };
     if (err) {
         return cb(err);
     }
@@ -66,16 +66,28 @@ app.use(stylus.middleware({
     force: true
 }));
 
+app.use(cockieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cockieParser());
 app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(express.static('./dist'));
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.post('/api/login', passport.authenticate('local'), function(req, res) {
+    res.json({ user: req.user.username });
+});
+
+app.get('/', ensureLogin.ensureLoggedIn('/#!/login'), function(req, res, next) {
+    next();
+});
+
+app.get('/api/login', ensureLogin.ensureLoggedIn('/api/noUser'), function(req, res) {
     res.json({ user: req.user });
+});
+
+app.get('/api/noUser', function(req, res) {
+    res.json({ username: '' });
 });
 
 app.get('/api/search/:query', ensureLogin.ensureLoggedIn('/#!/login'), function(req, res) {

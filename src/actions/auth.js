@@ -7,10 +7,10 @@ export function authLoading() {
     };
 }
 
-export function authLoaded(cards) {
+export function authLoaded(user) {
     return {
         type: AUTH_LOADED,
-        cards
+        user
     };
 }
 
@@ -34,6 +34,22 @@ export function authLoad(credentials) {
             }
         }).then(data => {
             dispatch(authLoaded(data));
+        });
+    };
+}
+
+export function authRestore() {
+    return dispatch => {
+        fetch('/api/login')
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                return new Promise(resolve => resolve({ error: response.statusText }));
+            }
+        }).then(data => {
+            console.log(data);
+            // dispatch(authLoaded(data));
         });
     };
 }

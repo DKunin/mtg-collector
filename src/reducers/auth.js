@@ -1,13 +1,13 @@
-import { AUTH_LOADING, AUTH_LOADED } from '../actions/cards';
+import { AUTH_LOADING, AUTH_LOADED } from '../actions/auth';
 
-export default function auth(state = {}, action) {
+export default function auth(state = { username: '' }, action) {
     switch (action.type) {
 
         case AUTH_LOADING:
             return [];
 
         case AUTH_LOADED:
-            return action.user;
+            return { username: action.user.user };
 
         default:
             return state;
