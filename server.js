@@ -9,14 +9,13 @@ var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var fs = require('fs');
 var yaml = require('js-yaml');
-var helpers = require('./modules/helpers');
+// var helpers = require('./modules/helpers');
 var cockieParser = require('cookie-parser');
 var expressSession = require('express-session');
-
+var routes = require('./modules/routes');
 const CONFIG = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
 const PORT = CONFIG.server.port;
 const FILENAME = CONFIG.server.db;
-const head = helpers.head;
 
 const CARDBASE = CONFIG.externalapi.cardbase;
 const PRICES = CONFIG.externalapi.prices;
@@ -84,13 +83,7 @@ app.post('/api/login', passport.authenticate('local'), function(req, res) {
     res.json({ user: req.user.username });
 });
 
-app.get('/api/login', function(req, res) {
-    if (req.session.passport && req.session.passport.user) {
-        res.json({ user: req.session.passport.user.username });
-    } else {
-        res.json({});
-    }
-});
+app.get('/api/login', routes.getLogin);
 
 app.get('/api/noUser', function(req, res) {
     res.json({ username: '' });
