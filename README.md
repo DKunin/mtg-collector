@@ -5,7 +5,7 @@ Simple app to browse search and make list of Magic The Gathering cards.
 Still a long way to go to see something remotely usefull. Huge alpha.
 
 ## MVP functionality for v0.5.0
-- Basic auth
+- ~~Basic auth~~
 - Exporting cards as simple lines, with possibility of selection of what you want to export
 - Exporting whole collection as JSON
 - ~~Basic interface, no design, bare necessities~~

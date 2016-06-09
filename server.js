@@ -17,7 +17,7 @@ const CONFIG = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
 const PORT = CONFIG.server.port;
 const FILENAME = CONFIG.server.db;
 const head = helpers.head;
-console.log(CONFIG);
+
 const CARDBASE = CONFIG.externalapi.cardbase;
 const PRICES = CONFIG.externalapi.prices;
 var app = express();
@@ -117,19 +117,7 @@ app.get('/api/collection', function(req, res) {
 });
 
 app.get('/api/collectionexport', function(req, res) {
-    var editionsCodesForMtgRu = JSON.parse(fs.readFileSync('./editions.json').toString());
-    var jsonColleciton = COLLECTION.toJSON();
-    var response = Object.keys(jsonColleciton).map(singleObjectKey => {
-        var singleObject = jsonColleciton[singleObjectKey];
-        var edition = head(singleObject.editions);
-        var editioncode = editionsCodesForMtgRu.find(singleEdition => {
-            return edition.set.indexOf(singleEdition.name) !== -1;
-        });
-        return Object.assign({}, singleObject, {
-            editioncode: editioncode ? editioncode.code : '---'
-        });
-    });
-    res.json(response);
+    res.json(COLLECTION.toJSON());
 });
 
 app.post('/api/addCard', function(req, res) {
