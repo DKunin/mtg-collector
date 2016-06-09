@@ -8,39 +8,40 @@ var I = require('immutable');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var fs = require('fs');
+var yaml = require('js-yaml');
 var helpers = require('./modules/helpers');
 var cockieParser = require('cookie-parser');
 var expressSession = require('express-session');
-var ensureLogin = require('connect-ensure-login');
 
+const CONFIG = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
+const PORT = CONFIG.server.port;
+const FILENAME = CONFIG.server.db;
+const head = helpers.head;
+console.log(CONFIG);
+const CARDBASE = CONFIG.externalapi.cardbase;
+const PRICES = CONFIG.externalapi.prices;
 var app = express();
-var PORT = 7801;
-var head = helpers.head;
-const FILENAME = './collection.json';
 
 var savedJSON = JSON.parse(fs.readFileSync(FILENAME).toString());
-var editionsCodesForMtgRu = JSON.parse(fs.readFileSync('./editions.json').toString());
 var COLLECTION = I.Map(savedJSON);
 
 passport.use(new Strategy(
   function(username, password, cb) {
-      var user = { id: 0, username: 'felix', password: 'cat' };
-      if (!user) {
+      if (!CONFIG.user) {
           return cb(null, false);
       }
-      if (user.password != password) {
+      if (CONFIG.user.password != password) {
           return cb(null, false);
       }
-      return cb(null, user);
+      return cb(null, CONFIG.user);
   }));
 
 passport.serializeUser(function(user, cb) {
     cb(null, user);
 });
 
-passport.deserializeUser(function(id, cb) {
+passport.deserializeUser(function(user, cb) {
     var err = null;
-    var user = { id: 0, username: 'felix' };
     if (err) {
         return cb(err);
     }
@@ -50,7 +51,7 @@ passport.deserializeUser(function(id, cb) {
 function getSingleCardByName(name) {
     return new Promise(resolve => {
         request
-          .get(`https://api.deckbrew.com/mtg/cards?name=${name}`)
+          .get(`${CARDBASE}/mtg/cards?name=${name}`)
           .end((error, data) => {
               if (error) {
                   resolve(false);
@@ -73,9 +74,8 @@ app.use(expressSession({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true
-    // ,
-    // cookie: { secure: true }
 }));
+
 app.use(express.static('./dist'));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -96,9 +96,9 @@ app.get('/api/noUser', function(req, res) {
     res.json({ username: '' });
 });
 
-app.get('/api/search/:query', ensureLogin.ensureLoggedIn('/#!/login'), function(req, res) {
+app.get('/api/search/:query', function(req, res) {
     request
-      .get(`https://api.deckbrew.com/mtg/cards?name=${req.params.query}`)
+      .get(`${CARDBASE}/mtg/cards?name=${req.params.query}`)
       .end((error, data) => {
           res.json(data.body);
       });
@@ -106,7 +106,7 @@ app.get('/api/search/:query', ensureLogin.ensureLoggedIn('/#!/login'), function(
 
 app.get('/api/possible-price', function(req, res) {
     request
-      .get(`http://magictcgprices.appspot.com/api/cfb/price.json?cardname=${req.query.query}`)
+      .get(`${PRICES}/cfb/price.json?cardname=${req.query.query}`)
       .end((error, data) => {
           res.json(data.body);
       });
@@ -117,6 +117,7 @@ app.get('/api/collection', function(req, res) {
 });
 
 app.get('/api/collectionexport', function(req, res) {
+    var editionsCodesForMtgRu = JSON.parse(fs.readFileSync('./editions.json').toString());
     var jsonColleciton = COLLECTION.toJSON();
     var response = Object.keys(jsonColleciton).map(singleObjectKey => {
         var singleObject = jsonColleciton[singleObjectKey];
@@ -133,7 +134,7 @@ app.get('/api/collectionexport', function(req, res) {
 
 app.post('/api/addCard', function(req, res) {
     request
-      .get(`https://api.deckbrew.com/mtg/cards/${req.query.id}`)
+      .get(`${CARDBASE}/mtg/cards/${req.query.id}`)
       .end((error, data) => {
           COLLECTION = COLLECTION.set(req.query.id, data.body);
           fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
@@ -142,7 +143,7 @@ app.post('/api/addCard', function(req, res) {
 });
 app.post('/api/addCard', function(req, res) {
     request
-      .get(`https://api.deckbrew.com/mtg/cards/${req.query.id}`)
+      .get(`${CARDBASE}/mtg/cards/${req.query.id}`)
       .end((error, data) => {
           COLLECTION = COLLECTION.set(req.query.id, data.body);
           fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});

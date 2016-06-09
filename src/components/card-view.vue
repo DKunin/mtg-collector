@@ -22,6 +22,7 @@
             <div>Color: {{(card.colors || []).join(',')}}</div>
             <div>{{card.text}}</div>
             <div><i>{{card.editions[selectedEditionIndex].flavor}}</i></div>
+            <div v-if="card.power">{{card.power}}/{{card.toughness}}</div>
         </div>
         <div v-if="viewMode === 'image'">
             <img v-bind:src="card.editions[selectedEditionIndex].image_url" />
@@ -30,7 +31,6 @@
         <span v-for="edition in card.editions" 
             <span class="edition-tag" v-bind:class="{ 'edition-tag-current': selectedEditionIndex===$index }" v-on:click="setSelectedIndex($index)" title="{{edition.set}}">{{edition.set_id}}</span>
         </span>
-        <div v-if="card.power">{{card.power}}/{{card.toughness}}</div>
     </div>
 </template>
 
