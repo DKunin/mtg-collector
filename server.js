@@ -69,7 +69,13 @@ app.use(stylus.middleware({
 app.use(cockieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(expressSession({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+    // ,
+    // cookie: { secure: true }
+}));
 app.use(express.static('./dist'));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -78,12 +84,12 @@ app.post('/api/login', passport.authenticate('local'), function(req, res) {
     res.json({ user: req.user.username });
 });
 
-app.get('/', ensureLogin.ensureLoggedIn('/#!/login'), function(req, res, next) {
-    next();
-});
-
-app.get('/api/login', ensureLogin.ensureLoggedIn('/api/noUser'), function(req, res) {
-    res.json({ user: req.user });
+app.get('/api/login', function(req, res) {
+    if (req.session.passport && req.session.passport.user) {
+        res.json({ user: req.session.passport.user.username });
+    } else {
+        res.json({});
+    }
 });
 
 app.get('/api/noUser', function(req, res) {

@@ -40,7 +40,13 @@ export function authLoad(credentials) {
 
 export function authRestore() {
     return dispatch => {
-        fetch('/api/login')
+        fetch('/api/login', {
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
         .then(response => {
             if (response.status === 200) {
                 return response.json();
@@ -48,8 +54,7 @@ export function authRestore() {
                 return new Promise(resolve => resolve({ error: response.statusText }));
             }
         }).then(data => {
-            console.log(data);
-            // dispatch(authLoaded(data));
+            dispatch(authLoaded(data));
         });
     };
 }

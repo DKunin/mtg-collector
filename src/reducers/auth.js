@@ -7,7 +7,7 @@ export default function auth(state = { username: '' }, action) {
             return [];
 
         case AUTH_LOADED:
-            return { username: action.user.user };
+            return { username: action.user.user || '' };
 
         default:
             return state;
