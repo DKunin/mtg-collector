@@ -2,10 +2,10 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: ['./src/index'],
+    entry: './src/index',
     devtool: 'cheap-module-eval-source-map',
     output: {
-        path: __dirname + '/dist',
+        path: './dist',
         filename: 'bundle.[hash].js'
     },
     resolve: {

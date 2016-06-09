@@ -18,7 +18,6 @@
         <div v-if="viewMode === 'text'">
             <h4>{{card.name}} <div style="float:right;">{{card.cost}}</div></h4>
             <h5>{{(card.subtypes || []).join(',')}}</h5>
-            <button v-if="!collectionView" v-on:click="addToCollection(card.id)">Add to collection</button>
             <div>Color: {{(card.colors || []).join(',')}}</div>
             <div>{{card.text}}</div>
             <div><i>{{card.editions[selectedEditionIndex].flavor}}</i></div>
@@ -27,6 +26,8 @@
         <div v-if="viewMode === 'image'">
             <img v-bind:src="card.editions[selectedEditionIndex].image_url" />
         </div>
+
+        <button v-if="!collectionView" v-on:click="addToCollection(card.id)">Add to collection</button>
         
         <span v-for="edition in card.editions" 
             <span class="edition-tag" v-bind:class="{ 'edition-tag-current': selectedEditionIndex===$index }" v-on:click="setSelectedIndex($index)" title="{{edition.set}}">{{edition.set_id}}</span>

@@ -3,10 +3,12 @@ user:
   username: felix
   password: cat
 
+# Server settings
 server:
   port: 7801
   db: ./collection.json
 
+# External api settings
 externalapi:
   cardbase: https://api.deckbrew.com
   prices: http://magictcgprices.appspot.com/api
