@@ -3,7 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: ['./src/index'],
-    devtool: 'eval',
+    // devtool: 'eval',
     output: {
         path: './dist',
         filename: 'bundle.[hash].js'

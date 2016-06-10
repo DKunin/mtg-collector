@@ -18,6 +18,7 @@
   export default {
     data() {
       return {
+        auth: this.$select('auth'),
         credentials: {
           username: '',
           password: ''

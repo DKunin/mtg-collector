@@ -5,5 +5,7 @@ module.exports = {
     getPossiblePrice: require('./get-possible-price'),
     getCollection: require('./get-collection'),
     postCardAdd: require('./post-card-add'),
-    postCardRemove: require('./post-card-remove')
+    postCardRemove: require('./post-card-remove'),
+    postCardUpdate: require('./post-card-update'),
+    postCardImport: require('./post-card-import')
 };

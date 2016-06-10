@@ -1,24 +1,34 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var request = require('superagent');
-var I = require('immutable');
-var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
-var fs = require('fs');
-var yaml = require('js-yaml');
-var cockieParser = require('cookie-parser');
-var expressSession = require('express-session');
-var { getLogin, postLogin, getSearch, getPossiblePrice, getCollection, postCardAdd, postCardRemove } = require('./modules/routes');
+const express = require('express');
+const bodyParser = require('body-parser');
+const request = require('superagent');
+const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
+const fs = require('fs');
+const yaml = require('js-yaml');
+const cockieParser = require('cookie-parser');
+const expressSession = require('express-session');
+
+const {
+        getLogin,
+        postLogin,
+        getSearch,
+        getPossiblePrice,
+        getCollection,
+        postCardAdd,
+        postCardRemove,
+        postCardUpdate,
+        postCardImport
+    } = require('./modules/routes');
 const { server, externalapi, user } = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
+
 const PORT = server.port;
-const FILENAME = server.db;
 const CARDBASE = externalapi.cardbase;
 const PRICES = externalapi.prices;
-var app = express();
-var savedJSON = JSON.parse(fs.readFileSync(FILENAME).toString());
-var COLLECTION = I.Map(savedJSON);
+const app = express();
+const CollectionStoreClass = require('./modules/store');
+const collectionStore = new CollectionStoreClass(server.db);
 
 passport.use(new Strategy(
   function(username, password, cb) {
@@ -59,52 +69,13 @@ app.post('/api/login', passport.authenticate('local'), postLogin);
 app.get('/api/login', getLogin);
 app.get('/api/search/:query', getSearch(request, CARDBASE));
 app.get('/api/possible-price', getPossiblePrice(request, PRICES));
-app.get('/api/collection', getCollection(COLLECTION));
-app.get('/api/collectionexport', getCollection(COLLECTION));
-app.post('/api/addCard', postCardAdd(request, CARDBASE, COLLECTION, FILENAME));
-app.post('/api/removeCard', postCardRemove(COLLECTION, FILENAME));
-
-app.post('/api/updateCard', function(req, res) {
-    const constructedObject = req.body['edition-key'].map(singleKey => {
-        return {
-            id: singleKey,
-            edition: req.body[`edition-${singleKey}`],
-            comment: req.body[`comment-${singleKey}`],
-            price: req.body[`price-${singleKey}`],
-            foiled: req.body[`foiled-${singleKey}`]
-        };
-    });
-    COLLECTION = COLLECTION.update(req.query.id, item => {
-        item.owned = constructedObject;
-        return item;
-    });
-    fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
-    res.json(COLLECTION.toJSON());
-});
-
-app.post('/api/importCards', function(req, res) {
-    Promise
-        .all(req.body.map(name => {
-            return new Promise(resolve => {
-                request
-                  .get(`${CARDBASE}/mtg/cards?name=${name}`)
-                    .end((error, data) => {
-                        if (error) {
-                            resolve(false);
-                        }
-                        resolve(data.body[0]);
-                    });
-            });
-        }))
-        .then(result => {
-            result.filter(Boolean).filter(identity => Object.keys(identity).length).forEach(singleCardObject => {
-                COLLECTION = COLLECTION.set(singleCardObject.id, singleCardObject);
-                fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
-            });
-            res.json(COLLECTION.toJSON());
-        });
-});
+app.get('/api/collection', getCollection(collectionStore));
+app.get('/api/collectionexport', getCollection(collectionStore));
+app.post('/api/addCard', postCardAdd(request, CARDBASE, collectionStore));
+app.post('/api/removeCard', postCardRemove(collectionStore));
+app.post('/api/updateCard', postCardUpdate(collectionStore));
+app.post('/api/importCards', postCardImport(request, CARDBASE, collectionStore));
 
 app.listen(PORT);
 
-console.log('listening on port ' +  PORT);
+console.log(`listening on port ${PORT}`);

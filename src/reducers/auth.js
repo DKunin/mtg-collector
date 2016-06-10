@@ -7,7 +7,6 @@ export default function auth(state = { username: '' }, action) {
             return [];
 
         case AUTH_LOADED:
-            console.log({ username: action.user.user || '' })
             return { username: action.user.user || '' };
 
         default:

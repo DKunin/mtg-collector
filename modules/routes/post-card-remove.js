@@ -1,9 +1,5 @@
-var fs = require('fs');
-
-module.exports = (collection, filename) => {
+module.exports = (collectionStore) => {
     return (req, res) => {
-        collection = collection.delete(req.query.id);
-        fs.writeFile(filename, JSON.stringify(collection.toJSON()), () => {});
-        res.json(collection.toJSON());
+        res.json(collectionStore.delete(req.query.id));
     };
 };

@@ -14,6 +14,13 @@ export function authLoaded(user) {
     };
 }
 
+export function testAuth(user) {
+    return {
+        type: AUTH_LOADED,
+        user
+    };
+}
+
 export function authLoad(credentials) {
     return dispatch => {
         dispatch(authLoading());
@@ -27,7 +34,7 @@ export function authLoad(credentials) {
             body: JSON.stringify(credentials)
         })
         .then(response => {
-            if (response.status === 200) {
+            if ([200, 304].includes(response.status)) {
                 return response.json();
             } else {
                 return new Promise(resolve => resolve({ error: response.statusText }));
@@ -48,7 +55,7 @@ export function authRestore() {
             }
         })
         .then(response => {
-            if (response.status === 200) {
+            if ([200, 304].includes(response.status)) {
                 return response.json();
             } else {
                 return new Promise(resolve => resolve({ error: response.statusText }));
