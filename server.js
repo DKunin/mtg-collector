@@ -6,6 +6,7 @@ const request = require('superagent');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const fs = require('fs');
+const path = require('path');
 const yaml = require('js-yaml');
 const cockieParser = require('cookie-parser');
 const expressSession = require('express-session');
@@ -21,7 +22,7 @@ const {
         postCardUpdate,
         postCardImport
     } = require('./modules/routes');
-const { server, externalapi, user } = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
+const { server, externalapi, user } = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname + '/config.yml'), 'utf8'));
 
 const PORT = server.port;
 const CARDBASE = externalapi.cardbase;
@@ -76,6 +77,10 @@ app.post('/api/removeCard', postCardRemove(collectionStore));
 app.post('/api/updateCard', postCardUpdate(collectionStore));
 app.post('/api/importCards', postCardImport(request, CARDBASE, collectionStore));
 
-app.listen(PORT);
-
-console.log(`listening on port ${PORT}`);
+module.exports = {
+    port: () => PORT,
+    start: function() {
+        app.listen(PORT);
+        console.log(`listening on port ${PORT}`);
+    }
+};

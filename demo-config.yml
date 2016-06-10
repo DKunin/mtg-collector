@@ -6,7 +6,7 @@ user:
 # Server settings
 server:
   port: 7801
-  db: ./collection.json
+  db: /collection.json
 
 # External api settings
 externalapi:

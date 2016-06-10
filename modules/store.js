@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = class Collection {
     constructor(fileName) {
         this.fileName = path.resolve(fileName);
-        this.collection = I.Map(JSON.parse(fs.readFileSync(this.fileName).toString()));
+        this.collection = I.Map(JSON.parse(fs.readFileSync(path.resolve(__dirname + this.fileName)).toString()));
     }
 
     add(key, value) {
@@ -28,7 +28,7 @@ module.exports = class Collection {
     }
 
     save() {
-        fs.writeFile(this.fileName, JSON.stringify(this.getAll()), () => {});
+        fs.writeFile(path.resolve(__dirname + this.fileName), JSON.stringify(this.getAll()), () => {});
         return this.collection.toJSON();
     }
 };

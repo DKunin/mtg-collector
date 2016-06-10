@@ -1,14 +1,15 @@
 {
   "name": "mtg-collector",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "Simple app for ansambling of mtg collections",
   "main": "server.js",
   "repository": "https://github.com/DKunin/mtg-collector",
   "scripts": {
     "init": "echo {} >> collection.json && cp demo-config.yml config.yml",
+    "start": "electron main.js",
     "build": "NODE_ENV=production webpack --progress --colors --production",
+    "release": "rm -rf dist/bundle.*.js && rm -rf build && npm run build && electron-packager . mtg-collector --out=build --ignore='^/dist$' --prune --asar --platform=darwin --arch=x64 --version=$npm_package_electronVersion",
     "dev": "node node_modules/webpack/bin/webpack.js --progress --colors",
-    "start": "node server.js",
     "watch": "rm -rf dist/bundle.*.js && NODE_ENV=production node node_modules/webpack/bin/webpack.js --watch --progress --colors"
   },
   "author": "DKunin",
@@ -26,6 +27,7 @@
     "body-parser": "1.15.1",
     "cookie-parser": "1.4.3",
     "css-loader": "0.23.0",
+    "electron-prebuilt": "1.2.2",
     "eslint": "1.1.0",
     "eslint-loader": "1.0.0",
     "eslint-plugin-react": "3.13.1",
@@ -53,7 +55,11 @@
     "vue-hot-reload-api": "1.2.0",
     "vue-html-loader": "1.0.0",
     "vue-loader": "7.2.0",
-    "vue-router": "0.7.7",
+    "vue-router": "0.7.7"
+  },
+  "devDependencies": {
+    "electron-packager": "7.0.3",
+    "electron-prebuilt": "^1.2.0",
     "webpack": "1.12.9"
   }
 }
