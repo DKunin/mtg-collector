@@ -5,4 +5,4 @@ import * as collection from './collection';
 import * as possiblePrice from './possible-price';
 import * as auth from './auth';
 
-import store from '../store';
+// import store from '../store';

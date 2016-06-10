@@ -2,11 +2,11 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: ['./src/index'],
+    entry: './src/index',
     // devtool: 'eval',
     output: {
         path: './dist',
-        filename: 'bundle.[hash].js'
+        filename: 'bundle.js'
     },
     resolve: {
         extensions: ['', '.js', '.vue']

@@ -10,17 +10,17 @@ module.exports = class Collection {
 
     add(key, value) {
         this.collection = this.collection.set(key, value);
-        return this.collection.toJSON();
+        return this.save();
     }
 
     update(key, updaterFn) {
         this.collection = this.collection.update(key, updaterFn);
-        return this.collection.toJSON();
+        return this.save();
     }
 
     delete(key) {
         this.collection = this.collection.delete(key);
-        return this.collection.toJSON();
+        return this.save();
     }
 
     getAll() {
@@ -28,8 +28,7 @@ module.exports = class Collection {
     }
 
     save() {
-        // console.log(this.fileName, );
-        fs.writeFileSync(this.fileName, JSON.stringify(this.getAll()));
+        fs.writeFile(this.fileName, JSON.stringify(this.getAll()), () => {});
         return this.collection.toJSON();
     }
 };

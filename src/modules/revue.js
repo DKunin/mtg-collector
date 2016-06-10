@@ -27,19 +27,23 @@ function deepProp(obj, path) {
 function bindVue(Vue, store) {
     Vue.mixin({
         created() {
+            this._store = store;
+            console.log(this._bindProps);
             if (this._bindProps) {
                 const handleChange = () => {
+                    console.log('CHAHAANGE')
                     this._bindProps.forEach(prop => {
+                        console.log('CHAHAANGE', prop);
                         const { storeProp, realProp } = prop;
                         if (realProp && storeProp) {
-                            this.$set(realProp, deepProp(store.getState(), storeProp));
+                            this.$set(realProp, deepProp(this._store.getState(), storeProp));
                         }
                     });
                 };
-                //this._unsubscribe = store.subscribe(handleChange);
+                this._store.subscribe(handleChange);
 
+                this._unsubscribe = this._store.subscribe(handleChange);
             }
-            // console.log(store)
         },
         beforeDestroy() {
             if (this._unsubscribe) {
@@ -48,8 +52,6 @@ function bindVue(Vue, store) {
         }
     });
     Vue.prototype.$select = function(prop) {
-        // realProp: property name/path in your instance
-        // storeProp: property name/path in Redux store
         this._bindProps = this._bindProps || [];
         prop = parseProp(prop);
         this._bindProps.push(prop);
@@ -59,14 +61,12 @@ function bindVue(Vue, store) {
 
 export default class Revue {
     constructor(Vue, reduxStore, reduxActions) {
+        console.log('classConstructor');
         this.store = reduxStore;
         bindVue(Vue, this.store);
         if (reduxActions) {
             this.reduxActions = reduxActions;
         }
-                this.store.subscribe(() => {
-                    console.log('some state change', arguments);
-                });        
     }
     get state() {
         return this.store.getState();
