@@ -10,7 +10,6 @@ if (__DEV__) {
 Vue.config.debug = true;
 
 export const router = new VueRouter();
-
 router.map({
     '/': {
         component: require('./views/search')

@@ -23,6 +23,11 @@
     components: {
       login
     },
+    watch: {
+      auth: function(){
+        console.log('auth updated');
+      }
+    },
     created() {
       store.dispatch(store.actions.authRestore());
     },

@@ -10,7 +10,7 @@ var fs = require('fs');
 var yaml = require('js-yaml');
 var cockieParser = require('cookie-parser');
 var expressSession = require('express-session');
-var { getLogin, postLogin, getSearch, getPossiblePrice, getCollection, postCardAdd } = require('./modules/routes');
+var { getLogin, postLogin, getSearch, getPossiblePrice, getCollection, postCardAdd, postCardRemove } = require('./modules/routes');
 const { server, externalapi, user } = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
 const PORT = server.port;
 const FILENAME = server.db;
@@ -62,12 +62,7 @@ app.get('/api/possible-price', getPossiblePrice(request, PRICES));
 app.get('/api/collection', getCollection(COLLECTION));
 app.get('/api/collectionexport', getCollection(COLLECTION));
 app.post('/api/addCard', postCardAdd(request, CARDBASE, COLLECTION, FILENAME));
-
-app.post('/api/removeCard', function(req, res) {
-    COLLECTION = COLLECTION.delete(req.query.id);
-    fs.writeFile(FILENAME, JSON.stringify(COLLECTION.toJSON()), () => {});
-    res.json(COLLECTION.toJSON());
-});
+app.post('/api/removeCard', postCardRemove(COLLECTION, FILENAME));
 
 app.post('/api/updateCard', function(req, res) {
     const constructedObject = req.body['edition-key'].map(singleKey => {

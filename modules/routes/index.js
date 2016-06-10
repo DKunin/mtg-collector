@@ -4,5 +4,6 @@ module.exports = {
     getSearch: require('./get-search'),
     getPossiblePrice: require('./get-possible-price'),
     getCollection: require('./get-collection'),
-    postCardAdd: require('./post-card-add')
+    postCardAdd: require('./post-card-add'),
+    postCardRemove: require('./post-card-remove')
 };
