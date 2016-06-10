@@ -5,12 +5,12 @@ Simple app to browse search and make list of Magic The Gathering cards.
 Still a long way to go to see something remotely usefull. Huge alpha.
 
 ## MVP functionality for v0.5.0
-- ~~Basic auth~~
 - Package in Electron
 - Exporting cards as simple lines, with possibility of selection of what you want to export
 - Exporting whole collection as JSON
-- Optimize all routes
-- Make collection into store
+- ~~Basic auth~~
+- ~~Optimize all routes~~
+- ~~Make collection into store~~
 - ~~Basic interface, no design, bare necessities~~
 - ~~Cards search in external database~~
 - ~~Adding cards to your collection~~
