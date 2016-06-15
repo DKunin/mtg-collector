@@ -1,34 +1,56 @@
-const I = require('immutable');
-const fs = require('fs');
-const path = require('path');
+const Datastore = require('nedb');
 
 module.exports = class Collection {
     constructor(fileName) {
-        this.fileName = path.resolve(fileName);
-        this.collection = I.Map(JSON.parse(fs.readFileSync(path.resolve(__dirname + this.fileName)).toString()));
+        this.fileName = fileName;
+        this.collection = new Datastore({ filename: this.fileName, autoload: true });
     }
 
-    add(key, value) {
-        this.collection = this.collection.set(key, value);
-        return this.save();
+    add(value) {
+        return new Promise((resolve, reject) => {
+            this.collection.insert(value, (err) => {
+                if (err) {
+                    reject(err);
+                }
+                return resolve(this.save());
+            });
+        });
     }
 
-    update(key, updaterFn) {
-        this.collection = this.collection.update(key, updaterFn);
-        return this.save();
+    update(key, updateObject) {
+        return new Promise((resolve, reject) => {
+            this.collection.update({ id: key }, updateObject, {}, (err) => {
+                if (err) {
+                    reject(err);
+                }
+                return resolve(this.save());
+            });
+        });
     }
 
     delete(key) {
-        this.collection = this.collection.delete(key);
-        return this.save();
+        return new Promise((resolve, reject) => {
+            this.collection.remove({ id: key }, {}, (err) => {
+                if (err) {
+                    reject(err);
+                }
+                return resolve(this.save());
+            });
+        });
     }
 
     getAll() {
-        return this.collection.toJSON();
+        return this.save();
     }
 
     save() {
-        fs.writeFile(path.resolve(__dirname + this.fileName), JSON.stringify(this.getAll()), () => {});
-        return this.collection.toJSON();
+        return new Promise((resolve, reject) => {
+            this.collection.find({}, (err, docs) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(docs);
+            });
+        });
     }
 };

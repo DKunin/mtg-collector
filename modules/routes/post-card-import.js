@@ -14,13 +14,10 @@ module.exports = (request, cardbase, collectionStore) => {
                 });
             }))
             .then(result => {
-                result
+                const toImport = result
                     .filter(Boolean)
-                    .filter(identity => Object.keys(identity).length)
-                    .forEach(singleCardObject => {
-                        collectionStore.set(singleCardObject.id, singleCardObject);
-                    });
-                res.json(collectionStore.toJSON());
+                    .filter(identity => Object.keys(identity).length);
+                collectionStore.add(toImport).then(data => res.json(data));
             });
     };
 };

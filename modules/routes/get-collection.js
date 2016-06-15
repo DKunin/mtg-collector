@@ -1,5 +1,5 @@
 module.exports = collectionStore => {
     return (req, res) => {
-        res.json(collectionStore.getAll());
+        collectionStore.getAll().then(data => res.json(data));
     };
 };

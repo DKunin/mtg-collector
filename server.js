@@ -10,6 +10,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 const cockieParser = require('cookie-parser');
 const expressSession = require('express-session');
+const appDir = path.dirname(require.main.filename);
 
 const {
         getLogin,
@@ -29,7 +30,7 @@ const CARDBASE = externalapi.cardbase;
 const PRICES = externalapi.prices;
 const app = express();
 const CollectionStoreClass = require('./modules/store');
-const collectionStore = new CollectionStoreClass(server.db);
+const collectionStore = new CollectionStoreClass(appDir + '/' +server.db);
 
 passport.use(new Strategy(
   function(username, password, cb) {
