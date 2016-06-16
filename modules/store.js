@@ -12,7 +12,7 @@ module.exports = class Collection {
                 if (err) {
                     reject(err);
                 }
-                return resolve(this.save());
+                return resolve();
             });
         });
     }
@@ -23,24 +23,31 @@ module.exports = class Collection {
                 if (err) {
                     reject(err);
                 }
-                return resolve(this.save());
+                return resolve();
             });
         });
     }
 
-    delete(key) {
+    delete(query) {
         return new Promise((resolve, reject) => {
-            this.collection.remove({ id: key }, {}, (err) => {
+            this.collection.remove(query, {}, (err) => {
                 if (err) {
                     reject(err);
                 }
-                return resolve(this.save());
+                return resolve();
             });
         });
     }
 
     getAll() {
-        return this.save();
+        return new Promise((resolve, reject) => {
+            this.collection.find({}, (err, docs) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(docs);
+            });
+        });
     }
 
     find(query) {
@@ -61,17 +68,6 @@ module.exports = class Collection {
                     reject(err);
                 }
                 return resolve(doc);
-            });
-        });
-    }
-
-    save() {
-        return new Promise((resolve, reject) => {
-            this.collection.find({}, (err, docs) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(docs);
             });
         });
     }

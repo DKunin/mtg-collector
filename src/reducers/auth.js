@@ -1,4 +1,4 @@
-import { AUTH_LOADING, AUTH_LOADED, AUTH_CREATED } from '../actions/auth';
+import { AUTH_LOADING, AUTH_LOADED, AUTH_CREATED, AUTH_CLEARED } from '../actions/auth';
 
 export default function auth(state = { username: '', newusercreated: false }, action) {
     switch (action.type) {
@@ -11,6 +11,9 @@ export default function auth(state = { username: '', newusercreated: false }, ac
 
         case AUTH_CREATED:
             return { newusercreated: true };
+
+        case AUTH_CLEARED:
+            return { newusercreated: false, username: '' };
 
         default:
             return state;

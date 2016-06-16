@@ -1,5 +1,6 @@
 module.exports = {
     getLogin: require('./get-login'),
+    getLogout: require('./get-logout'),
     postLogin: require('./post-login'),
     getSearch: require('./get-search'),
     getPossiblePrice: require('./get-possible-price'),

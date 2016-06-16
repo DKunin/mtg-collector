@@ -18,12 +18,13 @@ const {
         getLogin,
         postLogin,
         getSearch,
-        getPossiblePrice,
+        getLogout,
         getCollection,
         postCardAdd,
         postCardRemove,
         postCardUpdate,
         postCardImport,
+        getPossiblePrice,
         postNewUser
     } = require('./modules/routes');
 const { server, externalapi } = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname + '/config.yml'), 'utf8'));
@@ -73,6 +74,7 @@ app.use(passport.session());
 app.post('/api/login', passport.authenticate('local'), postLogin);
 app.post('/api/newuser', postNewUser(usersStore));
 app.get('/api/login', getLogin);
+app.get('/logout', getLogout);
 app.get('/api/search/:query', getSearch(request, CARDBASE));
 app.get('/api/possible-price', getPossiblePrice(request, PRICES));
 app.get('/api/collection', getCollection(collectionStore));

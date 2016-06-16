@@ -70,6 +70,7 @@ export function collectionUpdateCard(id, form) {
     return dispatch => {
         fetch('/api/updateCard?id=' + id, {
             method: 'post',
+            credentials: 'same-origin',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'

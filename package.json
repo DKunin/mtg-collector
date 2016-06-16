@@ -1,6 +1,6 @@
 {
   "name": "mtg-collector",
-  "version": "0.4.2",
+  "version": "0.4.5",
   "description": "Simple app for ansambling of mtg collections",
   "main": "server.js",
   "repository": "https://github.com/DKunin/mtg-collector",
@@ -8,7 +8,7 @@
     "init": "echo {} >> collection.json && cp demo-config.yml config.yml",
     "start": "electron main.js",
     "build": "NODE_ENV=production webpack --progress --colors --production",
-    "release": "rm -rf dist/bundle.*.js && rm -rf build && npm run build && electron-packager . mtg-collector --out=build --ignore='^/dist$' --prune --asar --platform=darwin --arch=x64 --version=$npm_package_electronVersion",
+    "release": "rm -rf build && npm run build && electron-packager . mtg-collector --out=build --ignore='^/dist$' --prune --asar --platform=darwin --arch=x64 --version=$npm_package_electronVersion",
     "dev": "node node_modules/webpack/bin/webpack.js --progress --colors",
     "watch": "rm -rf dist/bundle.*.js && NODE_ENV=production node node_modules/webpack/bin/webpack.js --watch --progress --colors"
   },

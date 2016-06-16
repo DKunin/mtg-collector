@@ -7,6 +7,7 @@
       <a v-link="{ path: '/decks' }">Decks</a>
       <a v-link="{ path: '/import' }">Import</a>
       <a v-link="{ path: '/export' }">Export</a>
+      <a href="/logout">Logout</a>
       <router-view></router-view>
     </div>
     <div v-if="!auth.username">

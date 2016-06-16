@@ -8,6 +8,8 @@ Still a long way to go to see something remotely usefull. Huge alpha.
 - Package in Electron
 - Exporting cards as simple lines, with possibility of selection of what you want to export
 - Exporting whole collection as JSON
+- ~~Multiple users~~
+- ~~Updare to neDb~~
 - ~~Basic auth~~
 - ~~Optimize all routes~~
 - ~~Make collection into store~~

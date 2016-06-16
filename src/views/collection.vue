@@ -61,10 +61,10 @@
                 }
                 var searchQuery = this.search.toLowerCase();
                 this.selectedCardIndex = 0;
-                return this.collection.filter(({ name }) => name.toLowerCase().indexOf(searchQuery)!==-1);
+                return this.collection.filter(({ name }) => name.toLowerCase().indexOf(searchQuery)!==-1) || [];
             }, 
             selectedCard: function() {
-                if (!this.selectedCardIndex && this.selectedCardIndex !== 0) {
+                if (!this.selectedCardIndex && this.selectedCardIndex !== 0 || !this.collectionFiltered[this.selectedCardIndex]) {
                     return {}
                 }
                 return this.collectionFiltered[this.selectedCardIndex];
