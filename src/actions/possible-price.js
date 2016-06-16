@@ -17,7 +17,13 @@ export function priceLoaded(price) {
 export function priceLoad(text) {
     return dispatch => {
         dispatch(priceLoading());
-        fetch(`/api/possible-price?query=${text}`)
+        fetch(`/api/possible-price?query=${text}`, {
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => response.json()).then(data => {
                 dispatch(priceLoaded(data));
             });

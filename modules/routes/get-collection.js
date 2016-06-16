@@ -1,5 +1,5 @@
 module.exports = collectionStore => {
     return (req, res) => {
-        collectionStore.getAll().then(data => res.json(data));
+        collectionStore.find({ owner: req.session.passport.user._id }).then(data => res.json(data));
     };
 };

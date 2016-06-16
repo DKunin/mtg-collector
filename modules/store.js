@@ -17,9 +17,9 @@ module.exports = class Collection {
         });
     }
 
-    update(key, updateObject) {
+    update(query, updateObject) {
         return new Promise((resolve, reject) => {
-            this.collection.update({ id: key }, updateObject, {}, (err) => {
+            this.collection.update(query, updateObject, {}, (err) => {
                 if (err) {
                     reject(err);
                 }
@@ -41,6 +41,28 @@ module.exports = class Collection {
 
     getAll() {
         return this.save();
+    }
+
+    find(query) {
+        return new Promise((resolve, reject) => {
+            this.collection.find(query, (err, doc) => {
+                if (err || !doc) {
+                    reject(err);
+                }
+                return resolve(doc);
+            });
+        });
+    }
+
+    findOne(query) {
+        return new Promise((resolve, reject) => {
+            this.collection.findOne(query, (err, doc) => {
+                if (err || !doc) {
+                    reject(err);
+                }
+                return resolve(doc);
+            });
+        });
     }
 
     save() {

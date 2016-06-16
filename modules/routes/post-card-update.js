@@ -9,7 +9,7 @@ module.exports = collectionStore => {
                 foiled: req.body[`foiled-${singleKey}`]
             };
         });
-        collectionStore.update(req.query.id, { $set: { owned: constructedObject } }).then(data => res.json(data));
+        collectionStore.update({ id: req.query.id, owner: req.session.passport.user._id }, { $set: { owned: constructedObject } }).then(data => res.json(data));
         // res.json(collectionStore.update(req.query.id, item => {
         //     item.owned = constructedObject;
         //     return item;

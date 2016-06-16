@@ -12,6 +12,9 @@
     <div v-if="!auth.username">
       <login></login>
     </div>
+    <div v-if="auth.newusercreated">
+        New user created
+    </div>
   </div>
 </template>
 

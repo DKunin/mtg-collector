@@ -4,3 +4,4 @@ dist
 config.yml
 collection.json
 collection.db
+users.db

@@ -7,5 +7,6 @@ module.exports = {
     postCardAdd: require('./post-card-add'),
     postCardRemove: require('./post-card-remove'),
     postCardUpdate: require('./post-card-update'),
-    postCardImport: require('./post-card-import')
+    postCardImport: require('./post-card-import'),
+    postNewUser: require('./post-new-user')
 };

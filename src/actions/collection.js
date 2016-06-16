@@ -19,7 +19,13 @@ export function collectionLoaded(collection) {
 export function collectionLoad() {
     return dispatch => {
         dispatch(collectionLoading());
-        fetch('/api/collection')
+        fetch('/api/collection', {
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => response.json()).then(data => {
                 dispatch(collectionLoaded(data));
             });

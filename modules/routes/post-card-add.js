@@ -3,7 +3,7 @@ module.exports = (request, cardbase, collectionStore) => {
         request
           .get(`${cardbase}/mtg/cards/${req.query.id}`)
           .end((error, data) => {
-              collectionStore.add(data.body).then(data => res.json(data));
+              collectionStore.add(Object.assign({}, data.body, { owner: req.session.passport.user._id })).then(data => res.json(data));
           });
     };
 };

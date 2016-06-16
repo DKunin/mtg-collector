@@ -10,7 +10,9 @@ const path = require('path');
 const yaml = require('js-yaml');
 const cockieParser = require('cookie-parser');
 const expressSession = require('express-session');
+
 const appDir = path.dirname(require.main.filename);
+const CollectionStoreClass = require('./modules/store');
 
 const {
         getLogin,
@@ -21,26 +23,27 @@ const {
         postCardAdd,
         postCardRemove,
         postCardUpdate,
-        postCardImport
+        postCardImport,
+        postNewUser
     } = require('./modules/routes');
-const { server, externalapi, user } = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname + '/config.yml'), 'utf8'));
+const { server, externalapi } = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname + '/config.yml'), 'utf8'));
 
 const PORT = server.port;
 const CARDBASE = externalapi.cardbase;
 const PRICES = externalapi.prices;
 const app = express();
-const CollectionStoreClass = require('./modules/store');
-const collectionStore = new CollectionStoreClass(appDir + '/' +server.db);
+
+const collectionStore = new CollectionStoreClass(appDir + '/' + server.db);
+const usersStore = new CollectionStoreClass(appDir + '/' + server.usersdb);
 
 passport.use(new Strategy(
   function(username, password, cb) {
-      if (!user) {
-          return cb(null, false);
-      }
-      if (user.password != password) {
-          return cb(null, false);
-      }
-      return cb(null, user);
+      usersStore.findOne({ username }).then(doc => {
+          if (doc.password != password) {
+              return cb(null, false);
+          }
+          return cb(null, doc);
+      }).catch(err => cb(err, false));
   }));
 
 passport.serializeUser(function(userObj, cb) {
@@ -68,6 +71,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.post('/api/login', passport.authenticate('local'), postLogin);
+app.post('/api/newuser', postNewUser(usersStore));
 app.get('/api/login', getLogin);
 app.get('/api/search/:query', getSearch(request, CARDBASE));
 app.get('/api/possible-price', getPossiblePrice(request, PRICES));

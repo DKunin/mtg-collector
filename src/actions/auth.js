@@ -1,5 +1,6 @@
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_LOADED = 'AUTH_LOADED';
+export const AUTH_CREATED = 'AUTH_CREATED';
 
 export function authLoading() {
     return {
@@ -10,6 +11,13 @@ export function authLoading() {
 export function authLoaded(user) {
     return {
         type: AUTH_LOADED,
+        user
+    };
+}
+
+export function userCreated(user) {
+    return {
+        type: AUTH_CREATED,
         user
     };
 }
@@ -41,6 +49,30 @@ export function authLoad(credentials) {
             }
         }).then(data => {
             dispatch(authLoaded(data));
+        });
+    };
+}
+
+export function newUser(credentials) {
+    return dispatch => {
+        dispatch(authLoading());
+        fetch('/api/newuser', {
+            method: 'post',
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
+        .then(response => {
+            if ([200, 304].includes(response.status)) {
+                return response.json();
+            } else {
+                return new Promise(resolve => resolve({ error: response.statusText }));
+            }
+        }).then(data => {
+            dispatch(userCreated(data));
         });
     };
 }
