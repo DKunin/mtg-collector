@@ -9,9 +9,10 @@
     "start": "electron main.js",
     "debug": "electron --debug=5858 ./main.js",
     "build": "NODE_ENV=production webpack --progress --colors --production",
-    "release": "rm -rf build && electron-packager ./ mtg-collector --out=build --prune --asar --platform=darwin --arch=x64 --version=$npm_package_electronVersion",
+    "release": "rm -rf build && electron-packager . mtg-collector --out=build --platform=darwin --arch=x64 --version=$npm_package_electronVersion",
     "dev": "node node_modules/webpack/bin/webpack.js --progress --colors",
-    "watch": "rm -rf dist/bundle.*.js && NODE_ENV=production node node_modules/webpack/bin/webpack.js --watch --progress --colors"
+    "watch": "rm -rf dist/bundle.*.js && NODE_ENV=production node node_modules/webpack/bin/webpack.js --watch --progress --colors",
+    "open": "open ./build/mtg-collector-darwin-x64/mtg-collector.app"
   },
   "author": "DKunin",
   "license": "MIT",
