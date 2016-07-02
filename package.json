@@ -10,6 +10,7 @@
     "debug": "electron --debug=5858 ./main.js",
     "build": "NODE_ENV=production webpack --progress --colors --production",
     "release": "rm -rf build && electron-packager . mtg-collector --out=build --platform=darwin --arch=x64 --version=$npm_package_electronVersion",
+    "release:copy": "cp dist/* ../mtg-collector-app/app && cp -rf ./modules ../mtg-collector-app/app/javascripts && cp config.yml ../mtg-collector-app",
     "dev": "node node_modules/webpack/bin/webpack.js --progress --colors",
     "watch": "rm -rf dist/bundle.*.js && NODE_ENV=production node node_modules/webpack/bin/webpack.js --watch --progress --colors",
     "open": "open ./build/mtg-collector-darwin-x64/mtg-collector.app"

@@ -2,7 +2,7 @@
 
 const server = require('./server');
 const yaml = require('js-yaml');
-const fs = require('fs');
+const fs = require('graceful-fs');
 const path = require('path');
 const appDir = path.dirname(require.main.filename);
 

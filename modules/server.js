@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const request = require('superagent');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
-const fs = require('fs');
+const fs = require('graceful-fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const cockieParser = require('cookie-parser');
@@ -24,7 +24,7 @@ const {
         getPossiblePrice,
         postNewUser
     } = require('./routes');
-const { server, externalapi } = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname + '/config.yml'), 'utf8'));
+const { server, externalapi } = yaml.safeLoad(fs.readFileSync(path.resolve('./config.yml'), 'utf8'));
 
 const PORT = server.port;
 const CARDBASE = externalapi.cardbase;
